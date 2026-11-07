@@ -8,7 +8,7 @@ def index():
     return render_template("index.html")
 @app.route("/login",methods=['GET','POST'])
 def login():
-    pass
+    return render_template('login.html',title="Login")
 @app.route("/register")
 def register():
     pass

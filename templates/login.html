@@ -2,9 +2,25 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>{{ title }}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-
+<header>
+    <h1>LeetClaus</h1>
+</header>
+<div class = 'accountformcontainer'>
+    <form>
+    <div class="loginField">
+        <input type="text" id="userinput" value="Username" readonly>
+    </div>
+    <div class="loginField">
+        <input type="text" value="Password" readonly>
+    </div>
+    <div class="loginField">
+        <input type="submit">
+    </div>
+</form>
+</div>
 </body>
 </html>
