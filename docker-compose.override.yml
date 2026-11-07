@@ -1,0 +1,14 @@
+# Local development only. `docker compose up` loads this automatically;
+# production skips it by running `docker compose -f docker-compose.yml ...`.
+services:
+  web:
+    # Flask dev server with auto-reload and the debugger. NEVER expose this publicly.
+    command: flask run --host 0.0.0.0 --port 5000 --debug
+    volumes:
+      # Live code edits without rebuilding.
+      - .:/app
+
+  mongo:
+    # Expose the database so you can use Compass or run `python app.py` on your machine.
+    ports:
+      - "27017:27017"
