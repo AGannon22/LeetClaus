@@ -12,16 +12,16 @@
 <div class='accountformcontainer'>
     <form id="register-form" method="POST" action="/register">
     <div class="loginField">
-        <input type="text" id="userinput" value="Username" readonly>
+        <input type="text" id="userinput" name="username" placeholder="Username" aria-label="Username" autocomplete="username" required>
     </div>
     <div class="loginField">
-        <input type="text" value="Password" readonly>
+        <input type="password" name="password" placeholder="Password" aria-label="Password" autocomplete="new-password" required>
     </div>
-      <div class="loginField">
-        <input type="text" value="Confirm Password" readonly>
+    <div class="loginField">
+        <input type="password" name="confirm_password" placeholder="Confirm Password" aria-label="Confirm Password" autocomplete="new-password" required>
     </div>
-      <div class="loginField">
-        <input type="text" value="LeetCode Username" readonly>
+    <div class="loginField">
+        <input type="text" name="leetcode_username" placeholder="LeetCode Username" aria-label="LeetCode Username" required>
     </div>
     <div class="loginField">
         <button type="submit">Create Account</button>

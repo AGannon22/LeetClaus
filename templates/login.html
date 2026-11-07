@@ -12,10 +12,10 @@
 <div class='accountformcontainer'>
     <form id="login-form" method="POST" action="/login">
     <div class="loginField">
-        <input type="text" id="userinput" value="Username" readonly>
+        <input type="text" id="userinput" name="username" placeholder="Username" aria-label="Username" autocomplete="username" required>
     </div>
     <div class="loginField">
-        <input type="text" value="Password" readonly>
+        <input type="password" name="password" placeholder="Password" aria-label="Password" autocomplete="current-password" required>
     </div>
     <div class="loginField">
         <button type="submit">Login</button>
