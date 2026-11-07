@@ -12,3 +12,8 @@ services:
     # Expose the database so you can use Compass or run `python app.py` on your machine.
     ports:
       - "27017:27017"
+
+  leetcode-api:
+    # Expose the API so you can browse it or run `python app.py` / testing.py on your machine.
+    ports:
+      - "3000:3000"

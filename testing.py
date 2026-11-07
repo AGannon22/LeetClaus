@@ -1,6 +1,5 @@
 import requests
-from helperfunctions.leetcodeAPI import confirmLeetCodeUser
-leetcodeURL = "https://alfa-leetcode-api.onrender.com/"
+from helperfunctions.leetcodeAPI import confirmLeetCodeUser, leetcodeURL
 def main():
     try:
         response = requests.get(leetcodeURL)

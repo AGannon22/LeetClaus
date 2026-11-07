@@ -15,8 +15,17 @@ services:
       MONGO_PASSWORD: ${MONGO_PASSWORD:-rootpassword}
       AUTH_DB_NAME: ${AUTH_DB_NAME:-leetclause_auth}
       DATA_DB_NAME: ${DATA_DB_NAME:-leetclause_data}
+      LEETCODE_API_URL: http://leetcode-api:3000/
     depends_on:
       - mongo
+      - leetcode-api
+
+  # Self-hosted copy of alfa-leetcode-api (https://github.com/alfaarghya/alfa-leetcode-api).
+  # Built-in limit: 120 requests/hour per IP, and every call comes from `web`.
+  leetcode-api:
+    image: alfaarghya/alfa-leetcode-api:2.0.4
+    container_name: leetclause-leetcode-api
+    restart: unless-stopped
 
   mongo:
     image: mongo:7.0
