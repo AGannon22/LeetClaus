@@ -9,3 +9,4 @@ A very incomplete list of any source I used, updated when I remembered to copy a
 - [GeekForGeeks BCrypt Article](https://www.geeksforgeeks.org/python/hashing-passwords-in-python-with-bcrypt/)
 - [HTML Button Tag Ref](https://www.geeksforgeeks.org/html/html-button-tag/)
 - [Pixilart for my pixel art needs](https://www.pixilart.com/draw/new)
+- ElevenLabs for my silly voicelines
