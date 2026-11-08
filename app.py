@@ -34,7 +34,7 @@ def login():
         if result != 'passed':
             return render_template('login.html', title="Login", error=result), 401
         else:
-            session.clear()  # drop anything from before logging in
+            session.clear()
             session["username"] = request.form["username"]
             return redirect(url_for("index"))
 @app.route("/logout")

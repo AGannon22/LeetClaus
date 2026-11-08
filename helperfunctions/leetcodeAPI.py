@@ -22,3 +22,17 @@ def confirmLeetCodeUser(username):
         return True
     else:
         return False
+def getHomeStats(username):
+    response = GETFROMXURL(leetcodeURL+username+'/profile')
+    if response is None or 'errors' in response:
+        return None
+    return {
+        "totalSolved": response["totalSolved"],
+        "totalQuestions": response["totalQuestions"],
+        "easySolved": response["easySolved"],
+        "totalEasy": response["totalEasy"],
+        "mediumSolved": response["mediumSolved"],
+        "totalMedium": response["totalMedium"],
+        "hardSolved": response["hardSolved"],
+        "totalHard": response["totalHard"]
+    }
