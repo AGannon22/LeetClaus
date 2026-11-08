@@ -5,6 +5,7 @@ from flask import Flask, render_template, request, redirect, url_for, session, a
 from helperfunctions.account_stuff import handleLogin, createNewAccount
 from helperfunctions.advent import getAdventDays
 from helperfunctions.progress import getCompletedDays
+from db import user_data
 
 load_dotenv()
 
@@ -30,6 +31,7 @@ def day(n):
     # no peeking at future days by typing the URL
     if not info["unlocked"]:
         return redirect(url_for("index"))
+
     return render_template("day.html", title=f"Day {n}", day=info)
 @app.route("/login",methods=['GET','POST'])
 def login():

@@ -16,7 +16,5 @@ def markDayCompleted(username, day):
         {"$addToSet": {"completed_days": day}},
         upsert=True,
     )
-
-
 def unmarkDayCompleted(username, day):
     user_data.update_one({"username": username}, {"$pull": {"completed_days": day}})

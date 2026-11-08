@@ -41,3 +41,5 @@ def getRecentSubmissions(username):
     if response is None or 'errors' in response:
         return None
     return response.submission['submission']
+def pickAProblem(username,previousProblems):
+    pass
