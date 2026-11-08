@@ -3,8 +3,8 @@
     <div class="day-page">
         <h2 class="advent-title">Day {{ day.day }}</h2>
         <time class="day-date" datetime="{{ day.iso }}">{{ day.date.strftime("%A, %B %d, %Y") }}</time>
-        {% if day.completed %}<p class="day-status">✓ Completed!</p>{% endif %}
-        {% if day.missed %}<p class="day-status">You missed this one. There's still time to catch up!</p>{% endif %}
+        {% if day.completed %}<p class="day-status"> Completed!</p>{% endif %}
+        {% if day.missed %}<p class="day-status">You missed this one. You can still submit tho!</p>{% endif %}
 
         {% if problem_slug %}
         <a class="day-problem" href="https://leetcode.com/problems/{{ problem_slug }}/" target="_blank" rel="noopener">
@@ -12,6 +12,19 @@
         </a>
         {% elif not day.completed %}
         <p class="day-status">Couldn't pick a problem right now. Try refreshing in a minute.</p>
+        {% endif %}
+        {% for category, message in get_flashed_messages(with_categories=true) %}
+        <p class="day-flash {{ category }}" role="status">{{ message }}</p>
+        {% endfor %}
+
+        {% if day.completed %}
+        <form>
+            <button class="day-check" type="button" disabled>Check Submission</button>
+        </form>
+        {% elif problem_slug %}
+        <form method="POST" action="{{ url_for('check_day', n=day.day) }}">
+            <button class="day-check" type="submit">Check Submission</button>
+        </form>
         {% endif %}
 
         <a class="day-back" href="{{ url_for('index') }}">← Back to calendar</a>

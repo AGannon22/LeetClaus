@@ -5,8 +5,6 @@ import json
 from dotenv import load_dotenv
 
 load_dotenv()
-
-# Our own alfa-leetcode-api container. Docker sets this to http://leetcode-api:3000/.
 leetcodeURL = os.getenv("LEETCODE_API_URL", "http://localhost:3000/")
 def GETFROMXURL(url):
     try:
@@ -38,18 +36,18 @@ def getHomeStats(username):
         "totalHard": response["totalHard"]
     }
 def getRecentSubmissions(username):
-    # list of the user's recent accepted submissions (newest first, max 20), or None on error
     response = GETFROMXURL(leetcodeURL + username + '/acSubmission')
     if response is None or 'errors' in response:
         return None
     return response["submission"]
+def solvedRecently(leetcodeUser, slug):
+    recent = getRecentSubmissions(leetcodeUser)
+    if recent is None:
+        return None
+    return any(s["titleSlug"] == slug for s in recent)
 def pickAProblem(leetcodeUser, previousProblems, attempts=5):
-    # random free problem that hasn't been assigned before and isn't in the user's recent solves.
-    # previousProblems = the user's "assigned" dict ({"1": "two-sum", ...}). Returns a problem dict or None.
     recent = getRecentSubmissions(leetcodeUser) or []
     excluded = set(previousProblems.values()) | {s["titleSlug"] for s in recent}
-
-    # one API call for the submissions, then at most `attempts` pages of problems (rate limit: 120/hour)
     for _ in range(attempts):
         skip = random.randint(0, 4000)
         response = GETFROMXURL(leetcodeURL + 'problems?limit=20&skip=' + str(skip))

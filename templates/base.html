@@ -9,7 +9,10 @@
 </head>
 <body>
 <header>
-    <h1>LeetClaus</h1>
+    <a class="brand" href="{{ url_for('index') }}">
+        <img id="logo" src="{{ url_for('static', filename='leetclauslogo.png') }}" alt="">
+        <h1>LeetClaus</h1>
+    </a>
     {% if session.username %}
     <nav class="usernav">
         <span>{{ session.username }}</span>

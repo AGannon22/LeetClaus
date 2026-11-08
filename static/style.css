@@ -18,6 +18,19 @@ header {
 header h1 {
     margin: 0;
 }
+/* logo + title, links back to the calendar */
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    color: white;
+    text-decoration: none;
+}
+#logo {
+    height: 48px;
+    width: auto;
+    image-rendering: pixelated;   /* keep the pixel art crisp */
+}
 .usernav {
     display: flex;
     align-items: center;
@@ -171,6 +184,40 @@ a.advent-day:focus-visible {
 }
 .day-problem:hover {
     background: #4f101a;
+}
+.day-check {
+    padding: 0.7rem 1.4rem;
+    font: inherit;
+    font-weight: 600;
+    color: #1f2933;
+    background: #ffd76a;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.1s;
+}
+.day-check:hover:not(:disabled) {
+    background: #f5c842;
+}
+.day-check:active:not(:disabled) {
+    transform: scale(0.97);
+}
+.day-check:disabled {
+    background: rgba(255, 255, 255, 0.15);
+    color: #c9c3d6;
+    cursor: default;
+}
+.day-flash {
+    margin: 0;
+    max-width: 420px;
+    padding: 0.6rem 1rem;
+    border-radius: 8px;
+}
+.day-flash.success {
+    background: rgba(31, 111, 67, 0.85);
+}
+.day-flash.error {
+    background: rgba(192, 57, 43, 0.85);
 }
 .day-back {
     margin-top: 1rem;
