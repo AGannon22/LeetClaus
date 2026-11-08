@@ -18,7 +18,4 @@ USER appuser
 
 EXPOSE 5000
 
-# Production server. WEB_CONCURRENCY sets the number of workers; PORT is honored
-# for hosts (Render, Railway, ...) that assign one. Dev overrides this command
-# in docker-compose.override.yml.
 CMD exec gunicorn --bind 0.0.0.0:${PORT:-5000} --access-logfile - app:app
