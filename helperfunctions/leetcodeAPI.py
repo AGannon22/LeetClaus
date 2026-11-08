@@ -40,4 +40,4 @@ def getRecentSubmissions(username):
     response = GETFROMXURL(leetcodeURL+username+'acSubmission')
     if response is None or 'errors' in response:
         return None
-    return response.submission.to_dict()
+    return response.submission['submission']
