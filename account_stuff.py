@@ -1,12 +1,21 @@
 from db import auth, user_data
 from helperfunctions.leetcodeAPI import confirmLeetCodeUser
+import bcrypt
 def handleLogin(request):
     pass
 def createNewAccount(request):
-    # returns "passed" on success, otherwise the error message to show the user
     result = validateAccount(request)
     if result == 'passed':
-        pass  # TODO: insert the new account into auth / user_data
+        formResponses = request.form.to_dict()
+        encodedpass = formResponses["password"].encode()
+        salt = bcrypt.gensalt()
+        hashedpass = bcrypt.hashpw(encodedpass, salt)
+        newUser = {
+            "username":formResponses["username"],
+            "hashedPass": hashedpass,
+            "leetcode_username":formResponses["leetcode_username"]
+        }
+        auth.insert_one(newUser)
     return result
 
 def validateAccount(request):
