@@ -19,3 +19,4 @@ user_data = db["user_data"]  # everything else about a user
 
 # Mongo itself rejects a second account with the same username (safe to run every startup).
 auth.create_index("username", unique=True)
+user_data.create_index("username", unique=True)  # one progress document per user

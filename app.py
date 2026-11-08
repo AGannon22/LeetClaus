@@ -4,6 +4,7 @@ from dotenv import load_dotenv
 from flask import Flask, render_template, request, redirect, url_for, session, abort
 from helperfunctions.account_stuff import handleLogin, createNewAccount
 from helperfunctions.advent import getAdventDays
+from helperfunctions.progress import getCompletedDays
 
 load_dotenv()
 
@@ -19,13 +20,13 @@ def require_login():
         return redirect(url_for("login"))
 @app.route("/")
 def index():
-    days = getAdventDays()
+    days = getAdventDays(completed=getCompletedDays(session["username"]))
     return render_template("index.html", days=days, year=days[0]["date"].year)
 @app.route("/day/<int:n>")
 def day(n):
     if not 1 <= n <= 25:
         abort(404)
-    info = getAdventDays()[n - 1]
+    info = getAdventDays(completed=getCompletedDays(session["username"]))[n - 1]
     # no peeking at future days by typing the URL
     if not info["unlocked"]:
         return redirect(url_for("index"))

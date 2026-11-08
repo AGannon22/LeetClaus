@@ -88,7 +88,7 @@ header h1 {
 /*advent calendar */
 .advent-title {
     margin: 2rem 0 1rem;
-    color: #ffd76a;
+    color: #ffffff;
 }
 .advent-grid {
     display: grid;
@@ -163,6 +163,18 @@ a.advent-day:focus-visible {
     position: relative;   /* sit on top of the image */
     margin-top: 25%;      /* on the box, below the bow */
     text-shadow: 0 1px 3px rgba(0, 0, 0, 0.7);
+}
+.advent-day.completed {
+    background: #1f6f43;   /* green = done */
+    box-shadow: 0 4px 10px rgba(31, 111, 67, 0.35);
+}
+.advent-check {
+    position: absolute;
+    top: 0.3rem;
+    right: 0.45rem;
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: #ffd76a;
 }
 .advent-lock {
     position: absolute;

@@ -16,6 +16,7 @@ def getAdventDays(today=None, completed=None):
             "label": d.strftime("%a %b %d"),
             "unlocked": d <= today,
             "today": d == today,
+            "completed": n in completed,
             "missed": d < today and n not in completed,
         })
     return days

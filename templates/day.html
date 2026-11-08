@@ -3,6 +3,7 @@
     <div class="day-page">
         <h2 class="advent-title">Day {{ day.day }}</h2>
         <time class="day-date" datetime="{{ day.iso }}">{{ day.date.strftime("%A, %B %d, %Y") }}</time>
+        {% if day.completed %}<p class="day-status">✓ Completed!</p>{% endif %}
         {% if day.missed %}<p class="day-status">You missed this one. There's still time to catch up!</p>{% endif %}
 
         {# TODO: today's challenge goes here #}

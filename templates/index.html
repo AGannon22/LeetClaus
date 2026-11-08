@@ -10,10 +10,11 @@
             <span class="advent-number">{{ day.day }}</span>
         </a>
         {% elif day.unlocked %}
-        <a class="advent-day unlocked{% if day.today %} today{% endif %}" href="{{ url_for('day', n=day.day) }}"
-           data-date="{{ day.iso }}">
+        <a class="advent-day unlocked{% if day.today %} today{% endif %}{% if day.completed %} completed{% endif %}"
+           href="{{ url_for('day', n=day.day) }}" data-date="{{ day.iso }}">
             <span class="advent-number">{{ day.day }}</span>
             <time class="advent-date" datetime="{{ day.iso }}">{{ day.label }}</time>
+            {% if day.completed %}<span class="advent-check" aria-label="Completed">✓</span>{% endif %}
         </a>
         {% else %}
         <div class="advent-day locked" data-date="{{ day.iso }}">
