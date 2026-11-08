@@ -36,3 +36,8 @@ def getHomeStats(username):
         "hardSolved": response["hardSolved"],
         "totalHard": response["totalHard"]
     }
+def getRecentSubmissions(username):
+    response = GETFROMXURL(leetcodeURL+username+'acSubmission')
+    if response is None or 'errors' in response:
+        return None
+    return response.submission.to_dict()

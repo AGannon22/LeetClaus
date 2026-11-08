@@ -19,4 +19,4 @@ def testingNotRealUser(user):
         print(f"An error occurred: {e}")
         return None
 if __name__ == '__main__':
-    print(testingNotRealUser("dunkdunkle/submission"))
+    print(testingNotRealUser("dunkdunkle/acSubmission"))
