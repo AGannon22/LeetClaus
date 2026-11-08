@@ -1,7 +1,23 @@
-from flask import Flask, render_template, request, redirect, url_for
-from account_stuff import handleLogin, createNewAccount
+import os
+
+from dotenv import load_dotenv
+from flask import Flask, render_template, request, redirect, url_for, session
+from helperfunctions.account_stuff import handleLogin, createNewAccount
+
+load_dotenv()
 
 app = Flask(__name__)
+# Signs the session cookie. Comes from .env (Docker passes it through).
+app.secret_key = os.environ["SECRET_KEY"]
+
+# Pages you can open without being logged in.
+PUBLIC_ENDPOINTS = {"login", "register", "static"}
+
+
+@app.before_request
+def require_login():
+    if request.endpoint not in PUBLIC_ENDPOINTS and "username" not in session:
+        return redirect(url_for("login"))
 
 
 @app.route("/")
@@ -10,10 +26,21 @@ def index():
 @app.route("/login",methods=['GET','POST'])
 def login():
     if request.method == "GET":
+        if "username" in session:
+            return redirect(url_for("index"))
         return render_template('login.html',title="Login")
     elif request.method == "POST":
-        handleLogin(request)
-        return redirect(url_for("index"))
+        result = handleLogin(request)
+        if result != 'passed':
+            return render_template('login.html', title="Login", error=result), 401
+        else:
+            session.clear()  # drop anything from before logging in
+            session["username"] = request.form["username"]
+            return redirect(url_for("index"))
+@app.route("/logout")
+def logout():
+    session.clear()
+    return redirect(url_for("login"))
 @app.route("/register", methods=['GET','POST'])
 def register():
     if request.method == "GET":

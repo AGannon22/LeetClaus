@@ -10,6 +10,29 @@ header {
     background-color: #681623;
     color: white;
     padding: 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+}
+header h1 {
+    margin: 0;
+}
+.usernav {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+.usernav a {
+    color: white;
+    text-decoration: none;
+    padding: 0.4rem 0.9rem;
+    border: 1px solid rgba(255, 255, 255, 0.6);
+    border-radius: 8px;
+    transition: background 0.2s;
+}
+.usernav a:hover {
+    background: rgba(255, 255, 255, 0.15);
 }
 #content {
     flex: 1;
@@ -72,7 +95,7 @@ header {
     transition: background 0.2s, transform 0.1s;
 }
 .loginField button:hover {
-    background: #0d4463;
+    background: #4f101a;
 }
 .loginField button:active {
     transform: scale(0.98);
@@ -114,5 +137,5 @@ header {
     cursor: pointer;
 }
 .popup button:hover {
-    background: #681623;
+    background: #4f101a;
 }

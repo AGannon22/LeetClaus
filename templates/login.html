@@ -14,7 +14,7 @@
 <div class='accountformcontainer'>
     <form id="login-form" method="POST" action="/login">
     <div class="loginField">
-        <input type="text" id="userinput" name="username" placeholder="Username" aria-label="Username" autocomplete="username" required>
+        <input type="text" id="userinput" name="username" placeholder="Username" aria-label="Username" autocomplete="username" value="{{ request.form.get('username', '') }}" required>
     </div>
     <div class="loginField">
         <input type="password" name="password" placeholder="Password" aria-label="Password" autocomplete="current-password" required>
@@ -24,5 +24,17 @@
     </div>
 </form>
 </div>
+{% if error %}
+<dialog id="error-popup" class="popup">
+    <h2>Couldn't log in</h2>
+    <p>{{ error }}</p>
+    <form method="dialog">
+        <button type="submit">OK</button>
+    </form>
+</dialog>
+<script>
+    document.getElementById("error-popup").showModal();
+</script>
+{% endif %}
 </body>
 </html>

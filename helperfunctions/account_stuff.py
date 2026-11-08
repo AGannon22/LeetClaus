@@ -2,7 +2,15 @@ from db import auth, user_data
 from helperfunctions.leetcodeAPI import confirmLeetCodeUser
 import bcrypt
 def handleLogin(request):
-    pass
+    formresponses = request.form.to_dict()
+    userInfo = auth.find_one({"username": formresponses["username"]})
+    # same message either way so nobody can probe which usernames exist
+    if userInfo is None:
+        return "Invalid username or password"
+    passAttempt = formresponses["password"].encode()
+    if not bcrypt.checkpw(passAttempt, userInfo["hashedPass"]):
+        return "Invalid username or password"
+    return "passed"
 def createNewAccount(request):
     result = validateAccount(request)
     if result == 'passed':
@@ -30,7 +38,7 @@ def validateAccount(request):
     #leetcode isn't alr claimed
     elif (auth.find_one({"leetcode_username": formResponses["leetcode_username"]}) is not None):
         return "Leetcode user already claimed"
-       #passwords match (duh)
+    #passwords match (duh)
     elif (formResponses["password"] != formResponses["confirm_password"]):
         return "Passwords dont match"
     #check password strength, TODO I want to check symbols and numbers included later
