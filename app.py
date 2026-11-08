@@ -1,16 +1,15 @@
 import os
 
 from dotenv import load_dotenv
-from flask import Flask, render_template, request, redirect, url_for, session
+from flask import Flask, render_template, request, redirect, url_for, session, abort
 from helperfunctions.account_stuff import handleLogin, createNewAccount
+from helperfunctions.advent import getAdventDays
 
 load_dotenv()
 
 app = Flask(__name__)
-# Signs the session cookie. Comes from .env (Docker passes it through).
 app.secret_key = os.environ["SECRET_KEY"]
 
-# Pages you can open without being logged in.
 PUBLIC_ENDPOINTS = {"login", "register", "static"}
 
 
@@ -18,11 +17,19 @@ PUBLIC_ENDPOINTS = {"login", "register", "static"}
 def require_login():
     if request.endpoint not in PUBLIC_ENDPOINTS and "username" not in session:
         return redirect(url_for("login"))
-
-
 @app.route("/")
 def index():
-    return render_template("index.html")
+    days = getAdventDays()
+    return render_template("index.html", days=days, year=days[0]["date"].year)
+@app.route("/day/<int:n>")
+def day(n):
+    if not 1 <= n <= 25:
+        abort(404)
+    info = getAdventDays()[n - 1]
+    # no peeking at future days by typing the URL
+    if not info["unlocked"]:
+        return redirect(url_for("index"))
+    return render_template("day.html", title=f"Day {n}", day=info)
 @app.route("/login",methods=['GET','POST'])
 def login():
     if request.method == "GET":

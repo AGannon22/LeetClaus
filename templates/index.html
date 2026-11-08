@@ -1,7 +1,27 @@
 {% extends "base.html" %}
 {% block content %}
-    <h1>Index</h1>
-    <p class="important">
-      Welcome to my awesome homepage.
-    </p>
+    <h2 class="advent-title">Advent Calendar {{ year }}</h2>
+    <div class="advent-grid">
+        {% for day in days %}
+        {% if day.missed %}
+        <a class="advent-day missed" href="{{ url_for('day', n=day.day) }}" data-date="{{ day.iso }}">
+            <img class="advent-present" src="{{ url_for('static', filename='unopenedredpresent.png') }}"
+                 alt="Day {{ day.day }} ({{ day.label }}): missed">
+            <span class="advent-number">{{ day.day }}</span>
+        </a>
+        {% elif day.unlocked %}
+        <a class="advent-day unlocked{% if day.today %} today{% endif %}" href="{{ url_for('day', n=day.day) }}"
+           data-date="{{ day.iso }}">
+            <span class="advent-number">{{ day.day }}</span>
+            <time class="advent-date" datetime="{{ day.iso }}">{{ day.label }}</time>
+        </a>
+        {% else %}
+        <div class="advent-day locked" data-date="{{ day.iso }}">
+            <span class="advent-number">{{ day.day }}</span>
+            <time class="advent-date" datetime="{{ day.iso }}">{{ day.label }}</time>
+            <span class="advent-lock" aria-label="Locked">🔒</span>
+        </div>
+        {% endif %}
+        {% endfor %}
+    </div>
 {% endblock %}
