@@ -81,3 +81,38 @@ header {
     outline: 3px solid rgba(17, 85, 124, 0.4);
     outline-offset: 2px;
 }
+/*error pop-up */
+.popup {
+    width: min(340px, calc(100% - 2rem));
+    padding: 1.5rem;
+    border: none;
+    border-top: 4px solid #c0392b;
+    border-radius: 12px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25);
+    text-align: center;
+}
+.popup::backdrop {
+    background: rgba(15, 30, 45, 0.45);
+}
+.popup h2 {
+    margin: 0 0 0.5rem;
+    font-size: 1.15rem;
+    color: #c0392b;
+}
+.popup p {
+    margin: 0 0 1.25rem;
+    color: #1f2933;
+}
+.popup button {
+    padding: 0.6rem 2rem;
+    font: inherit;
+    font-weight: 600;
+    color: white;
+    background: #11557C;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+}
+.popup button:hover {
+    background: #0d4463;
+}

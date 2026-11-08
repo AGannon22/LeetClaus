@@ -12,7 +12,7 @@
 <div class='accountformcontainer'>
     <form id="register-form" method="POST" action="/register">
     <div class="loginField">
-        <input type="text" id="userinput" name="username" placeholder="Username" aria-label="Username" autocomplete="username" required>
+        <input type="text" id="userinput" name="username" placeholder="Username" aria-label="Username" autocomplete="username" value="{{ request.form.get('username', '') }}" required>
     </div>
     <div class="loginField">
         <input type="password" name="password" placeholder="Password" aria-label="Password" autocomplete="new-password" required>
@@ -21,12 +21,24 @@
         <input type="password" name="confirm_password" placeholder="Confirm Password" aria-label="Confirm Password" autocomplete="new-password" required>
     </div>
     <div class="loginField">
-        <input type="text" name="leetcode_username" placeholder="LeetCode Username" aria-label="LeetCode Username" required>
+        <input type="text" name="leetcode_username" placeholder="LeetCode Username" aria-label="LeetCode Username" value="{{ request.form.get('leetcode_username', '') }}" required>
     </div>
     <div class="loginField">
         <button type="submit">Create Account</button>
     </div>
 </form>
 </div>
+{% if error %}
+<dialog id="error-popup" class="popup">
+    <h2>Couldn't create account</h2>
+    <p>{{ error }}</p>
+    <form method="dialog">
+        <button type="submit">OK</button>
+    </form>
+</dialog>
+<script>
+    document.getElementById("error-popup").showModal();
+</script>
+{% endif %}
 </body>
 </html>

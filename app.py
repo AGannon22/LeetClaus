@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, redirect, url_for
-from account_stuff import handleLogin, validateAccount
+from account_stuff import handleLogin, createNewAccount
 
 app = Flask(__name__)
 
@@ -19,7 +19,10 @@ def register():
     if request.method == "GET":
         return render_template('register.html', title="Register")
     elif request.method == "POST":
-        validateAccount(request)
+        result = createNewAccount(request)
+        if result != "passed":
+            # show the form again with the error in a pop-up
+            return render_template('register.html', title="Register", error=result), 400
         return redirect(url_for("login"))
 
 if __name__ == "__main__":

@@ -12,5 +12,10 @@ client = MongoClient(
     password=os.getenv("MONGO_PASSWORD", "rootpassword"),
 )
 
-auth_db = client[os.getenv("AUTH_DB_NAME", "leetclause_auth")]  # logins
-data_db = client[os.getenv("DATA_DB_NAME", "leetclause_data")]  # everything else
+db = client[os.getenv("DB_NAME", "leetclause")]
+
+auth = db["auth"]            # logins: username + password hash
+user_data = db["user_data"]  # everything else about a user
+
+# Mongo itself rejects a second account with the same username (safe to run every startup).
+auth.create_index("username", unique=True)
