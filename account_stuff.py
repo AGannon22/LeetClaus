@@ -12,11 +12,8 @@ def createNewAccount(request):
 def validateAccount(request):
     print(request, request.form.to_dict())
     formResponses = request.form.to_dict()
-    #passwords match (duh)
-    if (formResponses["password"] != formResponses["confirm_password"]):
-        return "Passwords dont match"
     #leetcode user is real
-    elif (confirmLeetCodeUser(formResponses["leetcode_username"]) == False):
+    if (confirmLeetCodeUser(formResponses["leetcode_username"]) == False):
         return "Leetcode username doesn't exist"
     #username isn't taken
     elif (auth.find_one({"username": formResponses["username"]}) is not None):
@@ -24,7 +21,10 @@ def validateAccount(request):
     #leetcode isn't alr claimed
     elif (auth.find_one({"leetcode_username": formResponses["leetcode_username"]}) is not None):
         return "Leetcode user already claimed"
-    #check password strength, I want to check symbols and numbers included later
+       #passwords match (duh)
+    elif (formResponses["password"] != formResponses["confirm_password"]):
+        return "Passwords dont match"
+    #check password strength, TODO I want to check symbols and numbers included later
     elif (len(formResponses["password"]) < 8):
         return "Use a stronger password"
     else:
