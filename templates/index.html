@@ -3,26 +3,27 @@
     <h2 class="advent-title">Advent Calendar {{ year }}</h2>
     <div class="advent-grid">
         {% for day in days %}
-        {% if day.missed %}
-        <a class="advent-day missed" href="{{ url_for('day', n=day.day) }}" data-date="{{ day.iso }}">
-            <img class="advent-present" src="{{ url_for('static', filename='unopenedredpresent.png') }}"
-                 alt="Day {{ day.day }} ({{ day.label }}): missed">
-            <span class="advent-number">{{ day.day }}</span>
-        </a>
+        {% if day.completed %}
+            {% set state, image = "completed", "unopenedgreenpresent.png" %}
+        {% elif day.missed %}
+            {% set state, image = "missed", "unopenedredpresent.png" %}
         {% elif day.unlocked %}
-        <a class="advent-day unlocked{% if day.today %} today{% endif %}{% if day.completed %} completed{% endif %}"
-           href="{{ url_for('day', n=day.day) }}" data-date="{{ day.iso }}">
-            <span class="advent-number">{{ day.day }}</span>
-            <time class="advent-date" datetime="{{ day.iso }}">{{ day.label }}</time>
-            {% if day.completed %}<span class="advent-check" aria-label="Completed">✓</span>{% endif %}
-        </a>
+            {% set state, image = "unlocked", "unopenedpinkpresent.png" %}
         {% else %}
-        <div class="advent-day locked" data-date="{{ day.iso }}">
-            <span class="advent-number">{{ day.day }}</span>
-            <time class="advent-date" datetime="{{ day.iso }}">{{ day.label }}</time>
-            <span class="advent-lock" aria-label="Locked">🔒</span>
-        </div>
+            {% set state, image = "locked", "unopenedshadowpresent.png" %}
         {% endif %}
+
+        {% if day.unlocked %}
+        <a class="advent-day {{ state }}{% if day.today %} today{% endif %}"
+           href="{{ url_for('day', n=day.day) }}" data-date="{{ day.iso }}">
+        {% else %}
+        <div class="advent-day {{ state }}" data-date="{{ day.iso }}">
+        {% endif %}
+            <img class="advent-present" src="{{ url_for('static', filename=image) }}"
+                 alt="Day {{ day.day }} ({{ day.label }}): {{ state }}">
+            <span class="advent-number">Day {{ day.day }}</span>
+        {% if day.unlocked %}
+        </a>{% else %}</div>{% endif %}
         {% endfor %}
     </div>
 {% endblock %}

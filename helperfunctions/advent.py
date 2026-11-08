@@ -1,8 +1,6 @@
 from datetime import date
 
 def getAdventDays(today=None, completed=None):
-    # Pass `today` to test what the calendar looks like on another date.
-    # `completed` = set of day numbers the user finished; any earlier day not in it counts as missed.
     today = today or date.today()
     completed = completed or set()
     days = []
