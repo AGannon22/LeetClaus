@@ -29,4 +29,10 @@
 
         <a class="day-back" href="{{ url_for('index') }}">← Back to calendar</a>
     </div>
+
+    <div id="flying-santa" class="flying-santa" aria-hidden="true">
+        <img src="{{ url_for('static', filename='rocketsanta.png') }}" alt="">
+    </div>
+    <script src="{{ url_for('static', filename='santa.js') }}"></script>
+    <script src="{{ url_for('static', filename='submit.js') }}"></script>
 {% endblock %}
