@@ -7,7 +7,7 @@ body {
     flex-direction: column;
 }
 header {
-    background-color: #11557C;
+    background-color: #681623;
     color: white;
     padding: 1rem;
 }
@@ -65,7 +65,7 @@ header {
     font: inherit;
     font-weight: 600;
     color: white;
-    background: #11557C;
+    background: #681623;
     border: none;
     border-radius: 8px;
     cursor: pointer;
@@ -108,11 +108,11 @@ header {
     font: inherit;
     font-weight: 600;
     color: white;
-    background: #11557C;
+    background: #681623;
     border: none;
     border-radius: 8px;
     cursor: pointer;
 }
 .popup button:hover {
-    background: #0d4463;
+    background: #681623;
 }
