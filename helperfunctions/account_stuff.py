@@ -2,6 +2,7 @@ from db import auth, user_data
 from helperfunctions.leetcodeAPI import confirmLeetCodeUser
 import bcrypt
 from helperfunctions.progress import newUserDataDoc
+import string
 def handleLogin(request):
     formresponses = request.form.to_dict()
     userInfo = auth.find_one({"username": formresponses["username"]})
@@ -52,8 +53,23 @@ def validateAccount(request):
     #passwords match (duh)
     elif (formResponses["password"] != formResponses["confirm_password"]):
         return "Passwords dont match"
-    #check password strength, TODO I want to check symbols and numbers included later
+    #check password strength
     elif (len(formResponses["password"]) < 8):
-        return "Use a stronger password"
+        return "Password must be at least 8 character"
+    elif (len(formResponses["password"]) > 40):
+        return "Password must be less than 40 character"
+    elif (len(formResponses["username"]) > 40):
+        return "Username must be less than 40 character"
     else:
-        return "passed"
+        specialChars = string.punctuation
+        symbol = False
+        number = False
+        for char in formResponses["password"]:
+            if char in specialChars:
+                symbol = True
+            elif char.isdigit():
+                number = True
+        if symbol and number:
+            return "passed"
+        else:
+            return "Make sure your password has a special character and number"
