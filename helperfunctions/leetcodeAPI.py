@@ -1,4 +1,5 @@
 import os
+import random
 import requests
 import json
 from dotenv import load_dotenv
@@ -37,9 +38,24 @@ def getHomeStats(username):
         "totalHard": response["totalHard"]
     }
 def getRecentSubmissions(username):
-    response = GETFROMXURL(leetcodeURL+username+'acSubmission')
+    # list of the user's recent accepted submissions (newest first, max 20), or None on error
+    response = GETFROMXURL(leetcodeURL + username + '/acSubmission')
     if response is None or 'errors' in response:
         return None
-    return response.submission['submission']
-def pickAProblem(username,previousProblems):
-    pass
+    return response["submission"]
+def pickAProblem(leetcodeUser, previousProblems, attempts=5):
+    # random free problem that hasn't been assigned before and isn't in the user's recent solves.
+    # previousProblems = the user's "assigned" dict ({"1": "two-sum", ...}). Returns a problem dict or None.
+    recent = getRecentSubmissions(leetcodeUser) or []
+    excluded = set(previousProblems.values()) | {s["titleSlug"] for s in recent}
+
+    # one API call for the submissions, then at most `attempts` pages of problems (rate limit: 120/hour)
+    for _ in range(attempts):
+        skip = random.randint(0, 4000)
+        response = GETFROMXURL(leetcodeURL + 'problems?limit=20&skip=' + str(skip))
+        if response is None or 'errors' in response:
+            return None
+        for problem in response["problemsetQuestionList"]:
+            if not problem["isPaidOnly"] and problem["titleSlug"] not in excluded:
+                return problem
+    return None

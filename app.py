@@ -4,8 +4,8 @@ from dotenv import load_dotenv
 from flask import Flask, render_template, request, redirect, url_for, session, abort
 from helperfunctions.account_stuff import handleLogin, createNewAccount
 from helperfunctions.advent import getAdventDays
-from helperfunctions.progress import getCompletedDays
-from db import user_data
+from helperfunctions.leetcodeAPI import pickAProblem
+from helperfunctions.progress import getCompletedDays, getUserData, assignProblem
 
 load_dotenv()
 
@@ -27,12 +27,23 @@ def index():
 def day(n):
     if not 1 <= n <= 25:
         abort(404)
-    info = getAdventDays(completed=getCompletedDays(session["username"]))[n - 1]
-    # no peeking at future days by typing the URL
+    userStuff = getUserData(session["username"])
+    completed = set(userStuff.get("completed_days", []))
+    info = getAdventDays(completed=completed)[n - 1]
+    # no peeking at future days by typing the URL (checked before using any API calls)
     if not info["unlocked"]:
         return redirect(url_for("index"))
 
-    return render_template("day.html", title=f"Day {n}", day=info)
+    # keep the same problem once a day has one; only pick for unassigned, unfinished days
+    assigned = userStuff.get("assigned", {})
+    slug = assigned.get(str(n))
+    if slug is None and n not in completed:
+        problem = pickAProblem(userStuff.get("leetcode_username", ""), assigned)
+        if problem is not None:
+            slug = problem["titleSlug"]
+            assignProblem(session["username"], n, slug)
+
+    return render_template("day.html", title=f"Day {n}", day=info, problem_slug=slug)
 @app.route("/login",methods=['GET','POST'])
 def login():
     if request.method == "GET":

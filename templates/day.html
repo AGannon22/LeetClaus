@@ -6,7 +6,13 @@
         {% if day.completed %}<p class="day-status">✓ Completed!</p>{% endif %}
         {% if day.missed %}<p class="day-status">You missed this one. There's still time to catch up!</p>{% endif %}
 
-        {# TODO: today's challenge goes here #}
+        {% if problem_slug %}
+        <a class="day-problem" href="https://leetcode.com/problems/{{ problem_slug }}/" target="_blank" rel="noopener">
+            Today's problem: {{ problem_slug.replace('-', ' ').title() }} ↗
+        </a>
+        {% elif not day.completed %}
+        <p class="day-status">Couldn't pick a problem right now. Try refreshing in a minute.</p>
+        {% endif %}
 
         <a class="day-back" href="{{ url_for('index') }}">← Back to calendar</a>
     </div>

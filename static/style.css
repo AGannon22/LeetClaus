@@ -200,6 +200,19 @@ a.advent-day:focus-visible {
 .day-status {
     margin: 0;
 }
+.day-problem {
+    margin-top: 0.5rem;
+    padding: 0.75rem 1.25rem;
+    color: white;
+    background: #681623;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: background 0.2s;
+}
+.day-problem:hover {
+    background: #4f101a;
+}
 .day-back {
     margin-top: 1rem;
     color: #ffd76a;

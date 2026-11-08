@@ -1,10 +1,10 @@
 from db import auth, user_data
 from helperfunctions.leetcodeAPI import confirmLeetCodeUser
 import bcrypt
+from helperfunctions.progress import newUserDataDoc
 def handleLogin(request):
     formresponses = request.form.to_dict()
     userInfo = auth.find_one({"username": formresponses["username"]})
-    # same message either way so nobody can probe which usernames exist
     if userInfo is None:
         return "Invalid username or password"
     passAttempt = formresponses["password"].encode()
@@ -23,11 +23,12 @@ def createNewAccount(request):
             "hashedPass": hashedpass,
             "leetcode_username":formResponses["leetcode_username"]
         }
+        newUserData = newUserDataDoc(formResponses["username"], formResponses["leetcode_username"])
         auth.insert_one(newUser)
+        user_data.insert_one(newUserData)
     return result
 
 def validateAccount(request):
-    print(request, request.form.to_dict())
     formResponses = request.form.to_dict()
     #leetcode user is real
     if (confirmLeetCodeUser(formResponses["leetcode_username"]) == False):
