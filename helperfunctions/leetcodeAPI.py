@@ -45,12 +45,20 @@ def solvedRecently(leetcodeUser, slug):
     if recent is None:
         return None
     return any(s["titleSlug"] == slug for s in recent)
-def pickAProblem(leetcodeUser, previousProblems, attempts=5):
+def pickAProblem(leetcodeUser, prefDif, previousProblems, attempts=5):
     recent = getRecentSubmissions(leetcodeUser) or []
     excluded = set(previousProblems.values()) | {s["titleSlug"] for s in recent}
+    # how many problems each difficulty has, so skip never lands past the end of the list
+    stats = getHomeStats(leetcodeUser)
+    if stats is not None:
+        totals = {"EASY": stats["totalEasy"], "MEDIUM": stats["totalMedium"], "HARD": stats["totalHard"]}
+    else:
+        totals = {}
     for _ in range(attempts):
-        skip = random.randint(0, 4000)
-        response = GETFROMXURL(leetcodeURL + 'problems?limit=20&skip=' + str(skip))
+        difficulty = random.choice(prefDif)
+        total = totals.get(difficulty, 500)   # 500 is a safe guess if the stats call failed
+        skip = random.randint(0, max(total - 20, 0))
+        response = GETFROMXURL(leetcodeURL + 'problems?difficulty=' + difficulty + '&limit=20&skip=' + str(skip))
         if response is None or 'errors' in response:
             return None
         for problem in response["problemsetQuestionList"]:

@@ -16,6 +16,7 @@ def createNewAccount(request):
     if result == 'passed':
         formResponses = request.form.to_dict()
         encodedpass = formResponses["password"].encode()
+        prefList = makePrefList(request)
         salt = bcrypt.gensalt()
         hashedpass = bcrypt.hashpw(encodedpass, salt)
         newUser = {
@@ -23,10 +24,19 @@ def createNewAccount(request):
             "hashedPass": hashedpass,
             "leetcode_username":formResponses["leetcode_username"]
         }
-        newUserData = newUserDataDoc(formResponses["username"], formResponses["leetcode_username"])
+        newUserData = newUserDataDoc(formResponses["username"], formResponses["leetcode_username"],prefList)
         auth.insert_one(newUser)
         user_data.insert_one(newUserData)
     return result
+def makePrefList(request):
+    # build the list ourselves from which boxes were ticked, so only these three exact values can end up in the API URL
+    prefList = []
+    for field, difficulty in (("easy", "EASY"), ("medium", "MEDIUM"), ("hard", "HARD")):
+        if request.form.get(field) is not None:
+            prefList.append(difficulty)
+    if prefList == []:
+        prefList = ["EASY", "MEDIUM", "HARD"]
+    return prefList
 
 def validateAccount(request):
     formResponses = request.form.to_dict()

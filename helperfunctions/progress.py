@@ -1,21 +1,14 @@
 from db import user_data
 
-# One document per user in the user_data collection:
-#   {"username": "alyssa",
-#    "leetcode_username": "alyssa_lc",
-#    "completed_days": [1, 2, 5],
-#    "assigned": {"1": "two-sum", "2": "valid-parentheses"}}   # day number (as a string) -> problem slug
-
-
-def newUserDataDoc(username, leetcodeUsername):
+def newUserDataDoc(username, leetcodeUsername, prefDif):
     # the starting document for a brand-new user (created at registration)
     return {
         "username": username,
         "leetcode_username": leetcodeUsername,
         "completed_days": [],
         "assigned": {},
+        "prefDifficulty": prefDif
     }
-
 
 def getUserData(username):
     return user_data.find_one({"username": username})

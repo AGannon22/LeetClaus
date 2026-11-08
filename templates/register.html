@@ -25,6 +25,17 @@
     <div class="loginField">
         <input type="text" name="leetcode_username" placeholder="LeetCode Username" aria-label="LeetCode Username" value="{{ request.form.get('leetcode_username', '') }}" required>
     </div>
+    <fieldset class="loginField preferredDifficulty">
+        <legend>Types of LeetCodes</legend>
+        <div class="difficultyOptions">
+            <input type="checkbox" id="easyCheck" name="easy" value="EASY">
+            <label for="easyCheck" class="difficulty-easy">Easy</label>
+            <input type="checkbox" id="mediumCheck" name="medium" value="MEDIUM">
+            <label for="mediumCheck" class="difficulty-medium">Medium</label>
+            <input type="checkbox" id="hardCheck" name="hard" value="HARD">
+            <label for="hardCheck" class="difficulty-hard">Hard</label>
+        </div>
+    </fieldset>
     <div class="loginField">
         <button type="submit">Create Account</button>
     </div>

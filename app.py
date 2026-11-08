@@ -38,7 +38,7 @@ def day(n):
     assigned = userStuff.get("assigned", {})
     slug = assigned.get(str(n))
     if slug is None and n not in completed:
-        problem = pickAProblem(userStuff.get("leetcode_username", ""), assigned)
+        problem = pickAProblem(userStuff.get("leetcode_username", ""), userStuff.get("prefDifficulty",["EASY","MEDIUM","HARD"]),assigned)
         if problem is not None:
             slug = problem["titleSlug"]
             assignProblem(session["username"], n, slug)

@@ -323,6 +323,68 @@ a.advent-day:focus-visible {
     outline: 3px solid rgba(17, 85, 124, 0.4);
     outline-offset: 2px;
 }
+/* difficulty picker on the register form: checkboxes shown as toggle chips */
+.preferredDifficulty {
+    margin: 0;
+    padding: 0;
+    border: none;
+    min-width: 0;
+}
+.preferredDifficulty legend {
+    padding: 0;
+    margin-bottom: 0.5rem;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #1f2933;
+}
+.difficultyOptions {
+    display: flex;
+    gap: 0.5rem;
+}
+/* hide the native box but keep it focusable and readable by screen readers */
+.difficultyOptions input {
+    position: absolute;
+    opacity: 0;
+    width: 1px;
+    height: 1px;
+    margin: 0;
+}
+.difficultyOptions label {
+    --chip: #8a9ba8;
+    --chip-bg: #f8fafc;
+    flex: 1;
+    padding: 0.6rem 0.25rem;
+    text-align: center;
+    font-weight: 600;
+    color: var(--chip);
+    background: #f8fafc;
+    border: 1px solid #c9d6df;
+    border-radius: 8px;
+    cursor: pointer;
+    user-select: none;
+    transition: background 0.2s, border-color 0.2s, color 0.2s, transform 0.1s;
+}
+.difficultyOptions .difficulty-easy   { --chip: #1a7f64; --chip-bg: #e3f5ef; }
+.difficultyOptions .difficulty-medium { --chip: #a86400; --chip-bg: #fdf1dc; }
+.difficultyOptions .difficulty-hard   { --chip: #b3261e; --chip-bg: #fbe5e3; }
+.difficultyOptions label:hover {
+    border-color: var(--chip);
+}
+.difficultyOptions label:active {
+    transform: scale(0.97);
+}
+.difficultyOptions input:checked + label {
+    background: var(--chip-bg);
+    border-color: var(--chip);
+    box-shadow: inset 0 0 0 1px var(--chip);
+}
+.difficultyOptions input:checked + label::before {
+    content: "✓ ";
+}
+.difficultyOptions input:focus-visible + label {
+    outline: 3px solid rgba(17, 85, 124, 0.4);
+    outline-offset: 2px;
+}
 /*error pop-up */
 .popup {
     width: min(340px, calc(100% - 2rem));
