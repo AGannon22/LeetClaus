@@ -37,7 +37,7 @@
         </div>
     </fieldset>
     <div class="loginField">
-        <button type="submit">Create Account</button>
+        <button id='registerButton' type="submit">Create Account</button>
     </div>
 </form>
 </div>
@@ -53,5 +53,6 @@
     document.getElementById("error-popup").showModal();
 </script>
 {% endif %}
+<script src="{{ url_for('static', filename='register.js') }}"></script>
 </body>
 </html>
